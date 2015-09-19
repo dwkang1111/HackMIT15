@@ -3,6 +3,10 @@ html, body {
   margin: 0;
 }
 
+paper-icon-button {
+  padding: 0;
+}
+
 .yesButton {
   background-color: blue;
   color: white;
@@ -10,4 +14,10 @@ html, body {
 .noButton {
   background-color: white;
   color: black;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width:100%;
 }

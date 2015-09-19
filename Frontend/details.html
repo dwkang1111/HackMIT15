@@ -5,29 +5,39 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
   <link rel="import" href="elements.html">
-
+  <style>
+    paper-button {
+      width: 70%;
+    }
+  </style>
 </head>
 <body>
   <paper-toolbar>
+    <paper-icon-button icon="arrow-back" on-tap=""></paper-icon-button>
   </paper-toolbar>
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-7">
-        Name
+        <h3>Your mom</h3>
       </div>
-      <div class="col-xs-5 text-right">
+      <div class="col-xs-5 text-right" style="margin-top:30px;">
         1.86 mi
       </div>
     </div>
-    <div>
-      Confirm navigation
+    <div style="margin-top:20px;">
+      More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. 
     </div>
-    <div class="row">
-      <div class="col-xs-6">
-        <paper-button raised class="yesButton">Confirm</paper-button>
+    <div class="footer">
+      <div class="text-center">
+        <h3>Confirm navigation</h3>
       </div>
-      <div class="col-xs-6">
-        <paper-button raised class="noButton">Back</paper-button>
+      <div class="row text-center" style="margin-bottom:10px; margin-top:20px;">
+        <div class="col-xs-6">
+          <paper-button raised class="noButton">Back</paper-button>
+        </div>
+        <div class="col-xs-6">
+          <paper-button raised class="yesButton">Confirm</paper-button>
+        </div>
       </div>
     </div>
   </div>
