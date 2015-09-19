@@ -1,0 +1,13 @@
+html, body {
+  width: 100%;
+  margin: 0;
+}
+
+.yesButton {
+  background-color: blue;
+  color: white;
+}
+.noButton {
+  background-color: white;
+  color: black;
+}
