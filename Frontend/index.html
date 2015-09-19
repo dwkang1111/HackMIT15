@@ -19,15 +19,40 @@
 -->
 <html>
     <head>
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js">
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="import" href="elements.html" />
+        <link rel="import" href="bower_components/paper-input/paper-input.html">
         <title>Hello World!</title>
+        <style>
+        input {
+        background-color: rgba(0,0,0,0.1);
+        color: black;
+        border: none;
+        }
+        body{
+            text-align: center;
+            background-image: url("img/cordova.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center; 
+        }
+        form{
+            text-align: center;
+        }
+        </style>
     </head>
     <body>
-        <div style="position:absolute; left:50%; top:50%; width:50px;">
-            Hojun sucks
+        <div class="form-group">
+            <form action="demo_form.asp">
+            <paper-input label="ID" style="width:200px"></paper-input>
+            <paper-input label="Password" style="width:200px"></paper-input>
+            <input type="submit" value="Submit"></paper-input>
+            </form>
+>>>>>>> origin/master
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
