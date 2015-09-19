@@ -14,29 +14,41 @@
   </style>
 </head>
 <body>
-  <paper-toolbar class="fix">
-    <paper-icon-button icon="menu" on-tap=""></paper-icon-button>
-  </paper-toolbar>
-  <div style="height:100%;">
-    <div style="border-bottom:3px solid black; height:50%;">
-      <div style="top:55px; position:absolute; overflow:hidden" >
-        <!-- Insert map here -->
+  <paper-drawer-panel id="menu">
+    <paper-header-panel drawer>
+      Nah
+    </paper-header-panel>
+    <paper-header-panel main>
+      <paper-toolbar class="fix">
+        <iron-icon icon="menu" onclick="toggle()"></iron-icon>
+      </paper-toolbar>
+      <div style="height:100%;">
+        <div style="border-bottom:3px solid black; height:50%;">
+          <div style="top:55px; position:absolute; overflow:hidden" >
+            <!-- Insert map here -->
+          </div>
+        </div>
+        <div style="top:50%; height:50%; width:100%; overflow-y:auto; overflow-x:hidden;">
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+          <rec-box></rec-box>
+        </div>
       </div>
-    </div>
-    <div style="top:50%; height:50%; width:100%; overflow-y:auto; overflow-x:hidden;">
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-      <rec-box></rec-box>
-    </div>
-  </div>
+    </paper-header-panel>
+  </paper-drawer-panel>
+  <script>
+    function toggle() {
+      document.getElementById('menu').togglePanel();
+    }
+  </script>
 </body>
 </head>
