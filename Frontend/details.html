@@ -23,17 +23,17 @@
   </paper-toolbar>
   <div class="container-fluid">
     <div class="row" style="margin-bottom:20px;">
-      <div class="col-xs-7">
+      <div class="col-xs-7" id="name">
         <h3>Your mom</h3>
       </div>
-      <div class="col-xs-5 text-right" style="margin-top:30px;">
+      <div class="col-xs-5 text-right" style="margin-top:30px;" id="dist">
         1.86 mi
       </div>
     </div>
-    <div class="text-center" style="height:200px;">
+    <div class="text-center" style="height:200px;" id="image">
       <img src="img/temple.jpg" style="height:200px; width:auto;"/>
     </div>
-    <div style="margin-top:20px;">
+    <div style="margin-top:20px;" id="info">
       More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. <br>
       Get data from TripAdvisor.
     </div>
@@ -54,6 +54,26 @@
     </div>
   </div>
   <script>
+  $(document).ready(function() {
+    var index = localStorage.getItem('index');
+    var username = localStorage.getItem('username');
+    $.ajax({
+      url: "http://845edac5.ngrok.io/search/",
+      method: "GET",
+      data: {'username': localStorage.getItem('username'),
+             'lat': 42.3598,
+             'lon': 71.0921,
+             'quant': 10,
+             'qType':3
+      },
+      success: function(result) {
+        result = JSON.parse(result)[index];
+        $("#name").innerHTML = result.name;
+      },
+    });
+
+    
+  })
   </script>
 </body>
 </head>
