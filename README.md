@@ -1,4 +1,4 @@
-APPLICATION NAME
+SCENIFAI
 ================
 Features:
 - Rate sightseeing locations and images
