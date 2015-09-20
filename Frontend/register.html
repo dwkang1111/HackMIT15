@@ -28,17 +28,17 @@
                 <paper-input label="Password" type="Password"></paper-input>
                 <paper-input label="Confirm Password" type="Password"></paper-input>
                 <div class="text-center" style="margin-top:30px;">
-                    <a href="home.html">
-                        <paper-button raised class="yesButton">Register</paper-button>
-                    </a>
+                    <paper-button onclick="goHome()" raised class="yesButton">Register</paper-button>
                 </div>
             </form>
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
+        <script>
+            function goHome() {
+                page('index.html');
+            }
         </script>
     </body>
 </html>

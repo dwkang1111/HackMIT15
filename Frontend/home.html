@@ -23,8 +23,10 @@
   <!-- <div id="mainDiv"></div> -->
   <paper-drawer-panel id="menu">
     <paper-header-panel drawer style="z-index:5;">
-      <paper-button>Preferences</paper-button>
-      <paper-button>Log Out</paper-button>
+      <div style="margin-top:55px;">
+        <paper-button>Preferences</paper-button>
+        <paper-button onclick="logout()">Log Out</paper-button>
+      </div>
     </paper-header-panel>
     <paper-header-panel main>
       <paper-toolbar class="fix">
@@ -47,6 +49,9 @@
   <script>
     function toggle() {
       document.getElementById('menu').togglePanel();
+    }
+    function logout() {
+      page('index.html');
     }
     $(window).load(function() {
         $("#mainDiv").load("loadingTwo.html");

@@ -25,7 +25,7 @@ under the License.
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
   <link rel="import" href="bower_components/paper-input/paper-input.html">
   <link rel="import" href="elements.html" />
-  <style>    
+  <style>
     form {
       position: absolute;
       left: 50%;
@@ -43,7 +43,10 @@ under the License.
   </style>
 </head>
 <body>
-  <div style="height:100%;">
+  <div style="height:100%; overflow:hidden;">
+    <div class="text-center" style="margin-top:30px;">
+      <h2>Welcome to Scenifai</h2>
+    </div>
     <form action="demo_form.asp">
       <paper-input label="ID" id="ID"></paper-input>
       <paper-input label="Password" type="Password" id="password"></paper-input>
@@ -51,6 +54,7 @@ under the License.
         <p>Wrong ID/password!</p>
       </div>
       <div class="text-center" style="margin-top:30px;">
+        <paper-button raised class="noButton">Register</paper-button>
         <paper-button raised class="yesButton">Login</paper-button>
       </div>
     </form>
@@ -60,24 +64,32 @@ under the License.
   <script src="js/index.js"></script>
   <script>
     $(document).ready(function() {
+      $(".noButton").click(function() {
+        $("p").css("visibility", "hidden");
+        page('register.html');
+      })
       $(".yesButton").click(function() {
         $.support.cors = true;
         var tempID = document.getElementById("ID").value;
-        $.ajax({
-          url: "http://845edac5.ngrok.io/users/",
-          method: "GET",
-          data: {'username': tempID},
-          success: function(result) {
-            result = JSON.parse(result);
-            if(result.password === document.getElementById('password').value) {
-              $("p").css("visibility", "hidden");
-              localStorage.setItem('username', tempID);
-              page('loadingTwo.html');
-            }
-            else
-              $("p").css("visibility", "visible");
-          },
-        });
+        if(tempID != "") {
+          $.ajax({
+            url: "http://845edac5.ngrok.io/users/",
+            method: "GET",
+            data: {'username': tempID},
+            success: function(result) {
+              result = JSON.parse(result);
+              if(result.password === document.getElementById('password').value) {
+                $("p").css("visibility", "hidden");
+                localStorage.setItem('username', tempID);
+                page('loadingTwo.html');
+              }
+              else
+                $("p").css("visibility", "visible");
+            },
+          });
+        }
+        else
+          $("p").css("visibility", "visible");
       })
     })
   </script>
