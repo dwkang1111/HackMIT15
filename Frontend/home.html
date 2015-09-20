@@ -15,6 +15,7 @@
   <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
+  <div id="mainDiv"></div>
   <paper-drawer-panel id="menu">
     <paper-header-panel drawer style="z-index:5;">
       Sidebar
@@ -30,28 +31,51 @@
             
           </div>
         </div>
-        <div style="top:50%; height:50%; width:100%; overflow-y:auto; overflow-x:hidden;">
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
+        <div id="recboxDiv" style="top:50%; height:50%; width:100%; overflow-y:auto; overflow-x:hidden;">
+        <rec-box dist="30" name="something"></rec-box>
         </div>
       </div>
       <paper-fab icon="add" id="capturePhotoButton"></paper-fab>
     </paper-header-panel>
   </paper-drawer-panel>
+
   <script>
     function toggle() {
       document.getElementById('menu').togglePanel();
     }
+    $(window).load(function() {
+        $("#mainDiv").load("loadingTwo.html");
+    });
+    $(document).ready(function() {
+      $(window).load(function() {
+        $.ajax({
+          url: "http://845edac5.ngrok.io/users/",
+          method: "GET",
+          data: {'username': localStorage.getItem('username'),
+                 'lat': 42.3598,
+                 'lon': 71.0921,
+                 'quant': 10,
+          },
+          success: function(result) {
+            result = JSON.parse(result);
+            var div = $("#recboxDiv");
+            for(var x = 0; x < result.myItems.length; x++) {
+              $.ajax({
+                url: "http://845edac5.ngrok.io/data/",
+                method: "GET",
+                data: {'id': result.myItems[x]},
+                success: function(result) {
+                  result = JSON.parse(result);
+                  div.append("<rec-box dist=" + Math.round(result.dist/1000) + "></rec-box>");
+                },
+              });
+            }
+            $("#mainDiv").remove();
+          },
+        });
+      })
+
+    })
   </script>
 </body>
 </head>

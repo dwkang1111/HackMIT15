@@ -36,13 +36,20 @@ under the License.
     paper-input {
       width: 200px;
     }
+    p {
+      color: red;
+      visibility: hidden;
+    }
   </style>
 </head>
 <body>
   <div style="height:100%;">
     <form action="demo_form.asp">
       <paper-input label="ID" id="ID"></paper-input>
-      <paper-input label="Password" type="Password"></paper-input>
+      <paper-input label="Password" type="Password" id="password"></paper-input>
+      <div>
+        <p>Wrong ID/password!</p>
+      </div>
       <div class="text-center" style="margin-top:30px;">
         <paper-button raised class="yesButton">Login</paper-button>
       </div>
@@ -62,10 +69,13 @@ under the License.
           data: {'username': tempID},
           success: function(result) {
             result = JSON.parse(result);
-            //page('loadingTwo.html');
-            console.log(result);
-            console.log(result.password);
-            
+            if(result.password === document.getElementById('password').value) {
+              $("p").css("visibility", "hidden");
+              localStorage.setItem('username', tempID);
+              page('loadingTwo.html');
+            }
+            else
+              $("p").css("visibility", "visible");
           },
         });
       })
