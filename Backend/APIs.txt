@@ -1,0 +1,43 @@
+Particle:
+KPCB:
+Square: Several Open-source projects for various things
+	Pick single date from a calendar view
+	Picasso: image download/caching library for android
+	Moshi: JSON library for Android/Java
+	Seismic: Android device shake detection
+Microsoft: Cloud computing platform/infrastructure
+Google APIs for everything
+FiscalNote: Bill data and politics stuff
+Microsoft API:
+Progress: NativeScript for Javascript development cross-platform
+Thalmic Labs: Myo armband that detects hand motions
+
+
+
+Travel/Delivery:
+	Postmates: Delivery of sorts
+		- Delivery quote
+		- Create a delivery and poll it for the status
+	Uber: products, estimates/time, estimates/price
+	Concur:	Travel and Expense Software
+		Given a user:
+			Travel/Itinerary API: Access hotel/flight booking info
+			Expense API: get/push user's expense information
+
+Fitness:
+	Fitbit: yes
+
+Banking/Money:
+	Capital One: Multitude of public-facing data (atm, bank locations, peer-to-peer connections simulate weekly paycheck, or schedule bills
+
+Data Visualization:
+	Two Sigma: Beaker: Notebook-style development environment for working with large datasets
+		Data visualization stuff essentially?
+
+Image Processing/Search:
+	Giphy: GIF search engine (takes in words and gives gifs)
+
+Machine-Learning based Analysis:
+	indico: Text analysis: sentiment, tezt tag, language, political, keywords, etc
+		Image Analysis: facial emotion, image features, facial features, content, facial localization
+	Clarifai: Tag images, find similar images, time series tags on videos, train your own

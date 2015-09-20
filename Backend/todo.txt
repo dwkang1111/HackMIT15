@@ -1,0 +1,7 @@
+To Do:
+  Check that things are actually being sorted correctly
+    -Distance
+    -preference
+    - (rating is done)
+  Consider imgur since throwing this stuff around blows
+  
