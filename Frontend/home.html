@@ -12,16 +12,12 @@
       top: 0; 
       width: 100%;
     }
-<<<<<<< HEAD
     #map { height: 100%; }
-    
-=======
     paper-button {
       width: 100%;
       height: 80px;
       font-size: 20px;
     }
->>>>>>> b661b5cc2050c0904bf7feafa89a80e4e93edabc
   </style>
   <script type="text/javascript" src="js/index.js"></script>
 </head>
@@ -43,61 +39,7 @@
           <div style="top:55px; position:absolute; overflow:hidden;width:100%; height:40%;">
             <!-- Insert map here -->
             <script src="maps.js"> </script>
-              <div id = "map" style="width: 100%; height: 100%">
-              </div>
-              <script type="text/javascript">
-                var map;
-                var pos;
-                function initMap() {
-                  var pos = {lat: lati, lng: lngi};
-                  var map = new google.maps.Map(document.getElementById('map'), {
-                    center: pos,
-                    zoom: 4
-                  });
-                  var marker = new google.maps.Marker({
-                    position: pos,
-                    map: map,
-                    title: 'You are here',
-                    icon: 'blue_markerA.png'
-                  });
-                  var minx = 300;
-                  var miny = 300;
-                  var maxx = -300;
-                  var maxy = -300;
-                  for (var i = 0; i < 10; i++) {
-                    var x = lati + (Math.random()-0.5)*20;
-                    var y = lngi + (Math.random()-0.5)*20;
-                    var randomPoint = {lat:x, lng:y};
-                    
-                    
-                    var marker = new google.maps.Marker({
-                    position: randomPoint,
-                    map: map,
-                    title: 'Nearby location'
-                  });
-                    if (randomPoint.lat < minx)
-       minx = randomPoint.lat;
-     if (randomPoint.lat > maxx)
-       maxx = randomPoint.lat;
-     if (randomPoint.lng < miny)
-       miny = randomPoint.lng;
-     if (randomPoint.lng > maxy)
-       maxy = randomPoint.lng;
-                   
-                     var sw = new google.maps.LatLng(minx, miny);
-                     var ne = new google.maps.LatLng(maxx, maxy);
-                     
-                     var bounds = new google.maps.LatLngBounds(sw, ne);
-                     //map.fitBounds(bounds);
-
-                }
-              }
-    
-
-            </script>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAkuONPpkcHqvjlhdbss2ZtzfURWffji8&callback=initMap"> 
-            </script>
-            
+              <div id = "map" style="width: 100%; height: 100%"></div>
           </div>
         </div>
         <div id="recboxDiv" style="top:50%; height:50%; width:100%; overflow-y:auto; overflow-x:hidden;">
@@ -117,6 +59,7 @@
     $(window).load(function() {
         $("#mainDiv").load("loadingTwo.html");
     });
+    var array = [];
     $(document).ready(function() {
         $.ajax({
           url: "http://845edac5.ngrok.io/search/",
@@ -132,10 +75,67 @@
             var div = $("#recboxDiv");
             for(var x = 0; x < result.length; x++) {
               div.append("<rec-box name=\'" + result[x].name + "\' dist=" + Math.round(result[x].dist/1000) + " index=" + x + "></rec-box>"); 
+              array.push(result[x].lat);
+              array.push(result[x].lon);
+              decide();
             }
           },
         });
     })
+
+
+    // MAP
+      var map;
+      var pos;
+      function initMap() {
+        pos = {lat: lati, lng: lngi};
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: pos,
+          zoom: 4
+        });
+        marker = new google.maps.Marker({
+          position: pos,
+          map: map,
+          title: 'You are here',
+          icon: 'blue_markerA.png'
+        });
+        minx = 300;
+        miny = 300;
+        maxx = -300;
+        maxy = -300;
+      }
+      function decide() {
+        for (var i = 0; i < array.length; i++) {
+          var x = array[2*i];
+          var y = array[2*i+1];
+          var randomPoint = {lat:x, lng:y};
+          
+          var marker = new google.maps.Marker({
+            position: randomPoint,
+            map: map,
+            title: 'Nearby location'
+          });
+          if (randomPoint.lat < minx)
+            minx = randomPoint.lat;
+          if (randomPoint.lat > maxx)
+            maxx = randomPoint.lat;
+          if (randomPoint.lng < miny)
+            miny = randomPoint.lng;
+          if (randomPoint.lng > maxy)
+            maxy = randomPoint.lng;
+         
+           var sw = new google.maps.LatLng(minx, miny);
+           var ne = new google.maps.LatLng(maxx, maxy);
+           
+           var bounds = new google.maps.LatLngBounds(sw, ne);
+           map.fitBounds(bounds);
+        }
+      }
+    
+
+
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAkuONPpkcHqvjlhdbss2ZtzfURWffji8&callback=initMap"> 
   </script>
 </body>
 </head>
