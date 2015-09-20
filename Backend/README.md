@@ -57,8 +57,8 @@ Results:
 
 Arguments:
 - username
-- [lat] (depends on qType) : Latitude in degrees
-- [lon] (depends on qType) : Longitude in degrees
+- lat (depends on qType) : Latitude in degrees
+- lon (depends on qType) : Longitude in degrees
 - quant : how many you want
 - qType
    1 : By distance (requires lat and lon)
