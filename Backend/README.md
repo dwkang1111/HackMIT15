@@ -1,6 +1,7 @@
 #API Documentation:
 
 Base URL: [ip address]:3030/
+
 =================
 ##Picture Handler: 
 - Extension: data/
@@ -24,6 +25,7 @@ Arguments:
 
 Results:
 - Database will be updated with this new image, and the user's preferences will be updated accordingly.
+
 ==================
 ##User Handler:
 - Extension: users/
@@ -46,6 +48,7 @@ Arguments:
 Results:
 - Creates a user with username, password, and name. 
 - If this fails, a 400 error is set and the message is set as "User already exists."
+
 ===================
 ##Search Handler:
 - Extension: search/
