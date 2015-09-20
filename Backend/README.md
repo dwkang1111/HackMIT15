@@ -37,6 +37,7 @@ Arguments:
 
 Returns:
 - A JSON object with username, password, name, preferenceData about various attributes, and a list of images contributed (under 'myItems').
+- If this fails, a 401 error is sent with "User does not exist."
 
 ###POST: Create a user.
 
