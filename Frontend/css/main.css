@@ -10,6 +10,14 @@ paper-icon-button {
   padding: 0;
 }
 
+paper-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2;
+  background-color: blue !important;
+}
+
 .yesButton {
   background-color: blue;
   color: white;
