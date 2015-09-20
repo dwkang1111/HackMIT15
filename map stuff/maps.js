@@ -1,3 +1,5 @@
+
+
 var locRequest = new XMLHttpRequest();
 locRequest.open("POST", "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCAkuONPpkcHqvjlhdbss2ZtzfURWffji8", false);
 locRequest.send();
