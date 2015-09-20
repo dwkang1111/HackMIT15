@@ -1,5 +1,3 @@
-
-
 document.addEventListener("deviceready", onDeviceReady, false);
  
 function id(element) {
@@ -23,6 +21,7 @@ cameraApp.prototype={
     
     run: function(){
         var that=this;
+        console.log("here");
         that._pictureSource = navigator.camera.PictureSourceType;
         that._destinationType = navigator.camera.DestinationType;
         id("capturePhotoButton").addEventListener("click", function(){
