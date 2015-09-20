@@ -61,7 +61,10 @@ Arguments:
 - lon (depends on qType) : Longitude in degrees
 - quant : how many you want
 - qType
+
    1 : By distance (requires lat and lon)
+
    2 : By rating 
+   
    3 : By preference and rating (returns catered results based on the user's preferences)
    
