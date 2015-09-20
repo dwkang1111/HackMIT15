@@ -19,40 +19,36 @@
 -->
 <html>
     <head>
-        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js">
-        </script>
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="import" href="elements.html" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
         <link rel="import" href="bower_components/paper-input/paper-input.html">
-        <title>Hello World!</title>
-        <style>
-        input {
-        background-color: rgba(0,0,0,0.1);
-        color: black;
-        border: none;
-        }
-        body{
-            text-align: center;
-            background-image: url("img/cordova.png");
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center; 
-        }
+        <link rel="import" href="elements.html" />
+        <style>    
         form{
-            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -100px;
+            margin-top: -100px;
+        }
+        paper-input {
+            width: 200px;
         }
         </style>
     </head>
     <body>
-        <div class="form-group">
+        <div style="height:100%;">
             <form action="demo_form.asp">
-            <paper-input label="ID" style="width:200px"></paper-input>
-            <paper-input label="Password" style="width:200px"></paper-input>
-            <input type="submit" value="Submit"></paper-input>
+                <paper-input label="ID"></paper-input>
+                <paper-input label="Password"></paper-input>
+                <div class="text-center" style="margin-top:30px;">
+                    <a href="home.html">
+                        <paper-button raised class="yesButton">Login</paper-button>
+                    </a>
+                </div>
             </form>
->>>>>>> origin/master
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
