@@ -14,7 +14,7 @@ if __name__ ==  '__main__':
     # undecode = base64.b64encode(f.read())
     # payload = {'username':"davide", 'rating':1, 'lat':15, 'lon':25, 'serializedImage':undecode}
     # r = requests.post('http://127.0.0.1:3030/data/', data=json.dumps(payload))
-    r = urllib2.urlopen("http://127.0.0.1:3030/data/?quant=10&qType=1&username=david&lat=0&lon=0").read()
+    r = urllib2.urlopen("http://127.0.0.1:3030/data/?quant=10&qType=3&username=david&lat=0&lon=0").read()
     l = json.loads(r)
     for i in l:
         print i['lat'],i['lon'],i['username']

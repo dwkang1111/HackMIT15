@@ -83,19 +83,14 @@ class APIHandler(web.RequestHandler):
                 print dist(self.data[items[i]]['lat'], self.data[items[i]]['lon'], lat, lon)
             self.write(json.dumps(ret))
         elif qType == 2:
-            #print 'printing selfdata0'
-            #print self.data[0]
-            #print self.data
             item = []
             for key in self.data:
                 item.append((key, self.data[key]['rating']))
             items = sorted(item, key=lambda key: -1*key[1])
-            #print items
             ret = []
             for i in range(min(quant, len(items))):
                 ret.append(self.data[items[i][0]])
                 print items[i][1]
-            #print ret
             self.write(json.dumps(ret))
         elif qType == 3:
             username = self.get_argument('username')
@@ -106,6 +101,8 @@ class APIHandler(web.RequestHandler):
                     if attr in self.users[username]['preferenceData']:
                         tempa += self.data[key]['attributes'][attr] * self.users[username]['preferenceData'][attr]['ratingTot']/self.users[username]['preferenceData'][attr]['totalWeight']
                 tempa *= -1
+                tempa *= int(self.data[key]['rating'])
+                #print(tempa)
                 temp.append((key, tempa))
             items = sorted(temp, key=lambda key: key[1])
             ret = []
