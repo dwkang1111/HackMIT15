@@ -1,12 +1,12 @@
-API Documentation:
+#API Documentation:
 
 Base URL: [ip address]:3030/
 
 =================
-Picture Handler: 
+##Picture Handler: 
 - Extension: data/
 
-GET: Get information about a picture.
+###GET: Get information about a picture.
 
 Arguments: 
 - id: The id of the picture that you want to get information for.
@@ -15,10 +15,10 @@ Returns:
 - Full picture information in json, including location, user who submitted it, rating, and full picture data.
 
 ==================
-User Handler:
+##User Handler:
 - Extension: users/
 
-GET: Get information about a user.
+###GET: Get information about a user.
 
 Arguments:
 - username: The username of the user you are searching for.
@@ -26,7 +26,7 @@ Arguments:
 Returns:
 - A JSON object with username, password, name, preferenceData about various attributes, and a list of images contributed (under 'myItems').
 
-POST: Create a user.
+###POST: Create a user.
 
 Arguments:
 - username: The username of the user you want to create.
@@ -38,10 +38,10 @@ Results:
 - If this fails, a 400 error is set and the message is set as "User already exists."
 
 ===================
-Search Handler:
+##Search Handler:
 - Extension: search/
 
-GET: Search for matches for a user based on various query types.
+###GET: Search for matches for a user based on various query types.
 
 Arguments:
 - username
