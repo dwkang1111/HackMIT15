@@ -5,12 +5,15 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
   <link rel="import" href="elements.html">
-  <style>
+  <style type = "text/css">
+    html, body, #mapcanvas { height: 100%; margin: 0; padding: 0; }
     .fix {
       position: fixed; 
       top: 0; 
       width: 100%;
     }
+    #map { height: 100%; }
+    
   </style>
   <script type="text/javascript" src="js/index.js"></script>
 </head>
@@ -25,8 +28,63 @@
       </paper-toolbar>
       <div style="height:100%;">
         <div style="border-bottom:3px solid black; height:50%;">
-          <div style="top:55px; position:absolute; overflow:hidden" >
+          <div style="top:55px; position:absolute; overflow:hidden;width:100%; height:40%;">
             <!-- Insert map here -->
+            <script src="maps.js"> </script>
+              <div id = "map" style="width: 100%; height: 100%">
+              </div>
+              <script type="text/javascript">
+                var map;
+                var pos;
+                function initMap() {
+                  var pos = {lat: lati, lng: lngi};
+                  var map = new google.maps.Map(document.getElementById('map'), {
+                    center: pos,
+                    zoom: 4
+                  });
+                  var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    title: 'You are here',
+                    icon: 'blue_markerA.png'
+                  });
+                  var minx = 300;
+                  var miny = 300;
+                  var maxx = -300;
+                  var maxy = -300;
+                  for (var i = 0; i < 10; i++) {
+                    var x = lati + (Math.random()-0.5)*20;
+                    var y = lngi + (Math.random()-0.5)*20;
+                    var randomPoint = {lat:x, lng:y};
+                    
+                    
+                    var marker = new google.maps.Marker({
+                    position: randomPoint,
+                    map: map,
+                    title: 'Nearby location'
+                  });
+                    if (randomPoint.lat < minx)
+       minx = randomPoint.lat;
+     if (randomPoint.lat > maxx)
+       maxx = randomPoint.lat;
+     if (randomPoint.lng < miny)
+       miny = randomPoint.lng;
+     if (randomPoint.lng > maxy)
+       maxy = randomPoint.lng;
+                   
+                     var sw = new google.maps.LatLng(minx, miny);
+                     var ne = new google.maps.LatLng(maxx, maxy);
+                     
+                     var bounds = new google.maps.LatLngBounds(sw, ne);
+                     //map.fitBounds(bounds);
+
+                }
+              }
+    
+
+            </script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAkuONPpkcHqvjlhdbss2ZtzfURWffji8&callback=initMap"> 
+            </script>
             
           </div>
         </div>
