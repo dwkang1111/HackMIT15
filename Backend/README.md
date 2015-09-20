@@ -14,6 +14,18 @@ Arguments:
 Returns:
 - Full picture information in json, including location, user who submitted it, rating, and full picture data.
 
+###POST: Add an image.
+
+Arguments:
+- username: The username of the user submitting the image.
+- lat: Latitude in degrees
+- lon: Longitude in degrees
+- rating: Rating from 1-10 given by the user.
+- serializedImage: Base64 encoded image data.
+
+Results:
+- Database will be updated with this new image, and the user's preferences will be updated accordingly.
+
 ==================
 ##User Handler:
 - Extension: users/
