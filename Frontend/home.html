@@ -124,7 +124,7 @@
           if (randomPoint.lng > maxy)
             maxy = randomPoint.lng;
          
-           var sw = new google.maps.LatLng(minx, miny);
+           var sw = new google.maps.LatLng(minx, miny-5);
            var ne = new google.maps.LatLng(maxx, maxy);
            
            var bounds = new google.maps.LatLngBounds(sw, ne);
