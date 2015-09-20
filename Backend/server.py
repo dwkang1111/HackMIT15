@@ -4,9 +4,74 @@ import json
 import base64
 import requests
 from math import radians, sin, cos, atan2
-class UserHandler(web.RequestHandler):
-    def initialize(self, users,firebase):
+class PictureHandler(web.RequestHandler):
+    def initialize(self, users,data,firebase):
         self.users=users
+        self.data=data
+        self.firebase=firebase
+    def get(self):
+        """
+        Get picture with id
+        """
+        uuid = self.get_argument('id')
+        self.write(json.dumps(self.data[uuid]))
+    def post(self):
+        """
+        Add Image to database
+        Information required:
+            username
+            lat
+            lon
+            rating
+            serializedImage (base64 encoded)
+        """
+        info = json.loads(self.request.body)
+        username = info['username']
+        rating = int(info['rating'])
+        lat = float(info['lat'])
+        lon = float(info['lon'])
+
+        undecode = info['serializedImage']
+        print undecode
+
+        # Clarifai Call
+        headers = {"Authorization": "Bearer fvprKiHDx7UZgpvTNoONFVTqNBoyoO"}
+        payload = {"encoded_data": undecode}
+        r = requests.post('https://api.clarifai.com/v1/tag/', data=payload, headers=headers)
+        rj = json.loads(r.text)
+        print rj
+        attrs = rj['results'][0]['result']['tag']['classes']
+        probs = rj['results'][0]['result']['tag']['probs']
+        print rj['results'][0]['result']['tag']['classes']
+        print rj['results'][0]['result']['tag']['probs']
+
+        # Create item object to place in database
+        attDict = {}
+        for i in range(len(attrs)):
+            attDict[attrs[i]] = probs[i]
+        item = {'username':username, 'rating':rating,'lat':lat, 'lon':lon, 'serializedImage':undecode, 'attributes':attDict}
+
+        # Update database
+        ## Update User
+        pData = self.users[username]['preferenceData']
+        for i in range(len(attrs)):
+            if attrs[i] in pData:
+                pData[attrs[i]]['ratingTot'] += probs[i]*(float(rating)-5.5)/4.5
+                pData[attrs[i]]['totalWeight'] += probs[i]
+            else:
+                pData[attrs[i]] = {}
+                pData[attrs[i]]['ratingTot'] = probs[i]*(float(rating)-5.5)/4.5
+                pData[attrs[i]]['totalWeight'] = probs[i]
+        self.firebase.put('/users/'+username, 'preferenceData', pData)
+
+        ## Update Overall Item Data
+        ret = self.firebase.post('/data', item)
+        self.data[ret['name']] = item
+
+class UserHandler(web.RequestHandler):
+    def initialize(self, users,data,firebase):
+        self.users=users
+        self.data=data
         self.firebase = firebase
     def post(self):
         """
@@ -39,9 +104,17 @@ class UserHandler(web.RequestHandler):
             self.clear()
             self.set_status(401)
             self.finish("User does not exist")
-        self.write(json.dumps(users[username]))
+            return
+        ret  = {}
+        for key in self.users[username]:
+            ret[key] = self.users[username][key]
+        ret['myItems'] = []
+        for key in data:
+            if self.data[key]['username'] == username:
+                ret['myItems'].append(key)
+        self.write(json.dumps(ret))
 
-class APIHandler(web.RequestHandler):
+class SearchHandler(web.RequestHandler):
     def initialize(self,users,data,firebase):
         print('init')
         self.users=users
@@ -127,58 +200,6 @@ class APIHandler(web.RequestHandler):
             self.write(json.dumps(ret))
         print("HI")
 
-    def post(self):
-        """
-        Add Image to database
-        Information required:
-            username
-            lat
-            lon
-            rating
-            serializedImage (base64 encoded)
-        """
-        info = json.loads(self.request.body)
-        username = info['username']
-        rating = int(info['rating'])
-        lat = float(info['lat'])
-        lon = float(info['lon'])
-
-        undecode = info['serializedImage']
-        print undecode
-
-        # Clarifai Call
-        headers = {"Authorization": "Bearer fvprKiHDx7UZgpvTNoONFVTqNBoyoO"}
-        payload = {"encoded_data": undecode}
-        r = requests.post('https://api.clarifai.com/v1/tag/', data=payload, headers=headers)
-        rj = json.loads(r.text)
-        print rj
-        attrs = rj['results'][0]['result']['tag']['classes']
-        probs = rj['results'][0]['result']['tag']['probs']
-        print rj['results'][0]['result']['tag']['classes']
-        print rj['results'][0]['result']['tag']['probs']
-
-        # Create item object to place in database
-        attDict = {}
-        for i in range(len(attrs)):
-            attDict[attrs[i]] = probs[i]
-        item = {'username':username, 'rating':rating,'lat':lat, 'lon':lon, 'serializedImage':undecode, 'attributes':attDict}
-
-        # Update database
-        ## Update User
-        pData = self.users[username]['preferenceData']
-        for i in range(len(attrs)):
-            if attrs[i] in pData:
-                pData[attrs[i]]['ratingTot'] += probs[i]*(float(rating)-5.5)/4.5
-                pData[attrs[i]]['totalWeight'] += probs[i]
-            else:
-                pData[attrs[i]] = {}
-                pData[attrs[i]]['ratingTot'] = probs[i]*(float(rating)-5.5)/4.5
-                pData[attrs[i]]['totalWeight'] = probs[i]
-        self.firebase.put('/users/'+username, 'preferenceData', pData)
-
-        ## Update Overall Item Data
-        ret = self.firebase.post('/data', item)
-        self.data[ret['name']] = item
 def init(firebase):
     global users
     global data
@@ -199,8 +220,9 @@ if __name__ ==  '__main__':
     #print data
     application = web.Application(
         [
-            (r'/data/', APIHandler, dict(users=users,data=data,firebase=firebase)),
-            (r'/users/', UserHandler, dict(users=users,firebase=firebase))
+            (r'/search/', SearchHandler, dict(users=users,data=data,firebase=firebase)),
+            (r'/users/', UserHandler, dict(users=users,data=data,firebase=firebase)),
+            (r'/data/', PictureHandler, dict(users=users,data=data,firebase=firebase))
         ]
     )
     application.listen(3030)
