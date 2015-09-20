@@ -4,7 +4,34 @@ import json
 import base64
 import requests
 from math import radians, sin, cos, atan2
-class PictureHandler(web.RequestHandler):
+from tornado_cors import CorsMixin
+class PictureHandler(CorsMixin, web.RequestHandler):
+    # Value for the Access-Control-Allow-Origin header.
+    # Default: None (no header).
+    CORS_ORIGIN = '*'
+
+    # Value for the Access-Control-Allow-Headers header.
+    # Default: None (no header).
+    CORS_HEADERS = 'Content-Type'
+
+    # Value for the Access-Control-Allow-Methods header.
+    # Default: Methods defined in handler class.
+    # None means no header.
+    CORS_METHODS = 'POST'
+
+    # Value for the Access-Control-Allow-Credentials header.
+    # Default: None (no header).
+    # None means no header.
+    CORS_CREDENTIALS = True
+
+    # Value for the Access-Control-Max-Age header.
+    # Default: 86400.
+    # None means no header.
+    CORS_MAX_AGE = 21600
+
+    # Value for the Access-Control-Expose-Headers header.
+    # Default: None
+    CORS_EXPOSE_HEADERS = 'Location, X-WP-TotalPages'
     def initialize(self, users,data,firebase):
         self.users=users
         self.data=data
@@ -68,7 +95,33 @@ class PictureHandler(web.RequestHandler):
         ret = self.firebase.post('/data', item)
         self.data[ret['name']] = item
 
-class UserHandler(web.RequestHandler):
+class UserHandler(CorsMixin, web.RequestHandler):
+    # Value for the Access-Control-Allow-Origin header.
+    # Default: None (no header).
+    CORS_ORIGIN = '*'
+
+    # Value for the Access-Control-Allow-Headers header.
+    # Default: None (no header).
+    CORS_HEADERS = 'Content-Type'
+
+    # Value for the Access-Control-Allow-Methods header.
+    # Default: Methods defined in handler class.
+    # None means no header.
+    CORS_METHODS = 'POST'
+
+    # Value for the Access-Control-Allow-Credentials header.
+    # Default: None (no header).
+    # None means no header.
+    CORS_CREDENTIALS = True
+
+    # Value for the Access-Control-Max-Age header.
+    # Default: 86400.
+    # None means no header.
+    CORS_MAX_AGE = 21600
+
+    # Value for the Access-Control-Expose-Headers header.
+    # Default: None
+    CORS_EXPOSE_HEADERS = 'Location, X-WP-TotalPages'
     def initialize(self, users,data,firebase):
         self.users=users
         self.data=data
@@ -114,7 +167,33 @@ class UserHandler(web.RequestHandler):
                 ret['myItems'].append(key)
         self.write(json.dumps(ret))
 
-class SearchHandler(web.RequestHandler):
+class SearchHandler(CorsMixin, web.RequestHandler):
+    # Value for the Access-Control-Allow-Origin header.
+    # Default: None (no header).
+    CORS_ORIGIN = '*'
+
+    # Value for the Access-Control-Allow-Headers header.
+    # Default: None (no header).
+    CORS_HEADERS = 'Content-Type'
+
+    # Value for the Access-Control-Allow-Methods header.
+    # Default: Methods defined in handler class.
+    # None means no header.
+    CORS_METHODS = 'POST'
+
+    # Value for the Access-Control-Allow-Credentials header.
+    # Default: None (no header).
+    # None means no header.
+    CORS_CREDENTIALS = True
+
+    # Value for the Access-Control-Max-Age header.
+    # Default: 86400.
+    # None means no header.
+    CORS_MAX_AGE = 21600
+
+    # Value for the Access-Control-Expose-Headers header.
+    # Default: None
+    CORS_EXPOSE_HEADERS = 'Location, X-WP-TotalPages'
     def initialize(self,users,data,firebase):
         print('init')
         self.users=users
@@ -225,7 +304,8 @@ if __name__ ==  '__main__':
             (r'/data/', PictureHandler, dict(users=users,data=data,firebase=firebase))
         ]
     )
-    application.listen(3030)
+    application.listen(8000)
+
     """ Functioning Firebase Code"""
     #user = {'name':'dinosaur', 'lat':'10', 'lon': [10,234,35353]}
     #ret = firebase.post('/users', user)
