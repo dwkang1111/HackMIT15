@@ -46,6 +46,7 @@ class PictureHandler(CorsMixin, web.RequestHandler):
         """
         Add Image to database
         Information required:
+            name
             username
             lat
             lon
@@ -57,7 +58,7 @@ class PictureHandler(CorsMixin, web.RequestHandler):
         rating = int(info['rating'])
         lat = float(info['lat'])
         lon = float(info['lon'])
-
+        name = info['name']
         undecode = info['serializedImage']
         print undecode
 
@@ -76,7 +77,7 @@ class PictureHandler(CorsMixin, web.RequestHandler):
         attDict = {}
         for i in range(len(attrs)):
             attDict[attrs[i]] = probs[i]
-        item = {'username':username, 'rating':rating,'lat':lat, 'lon':lon, 'serializedImage':undecode, 'attributes':attDict}
+        item = {'name':name,'username':username, 'rating':rating,'lat':lat, 'lon':lon, 'serializedImage':undecode, 'attributes':attDict}
 
         # Update database
         ## Update User
@@ -225,10 +226,10 @@ class SearchHandler(CorsMixin, web.RequestHandler):
             return R*c
         quant = int(self.get_argument('quant'))
         qType = int(self.get_argument('qType'))
+        lat = float(self.get_argument('lat'))
+        lon = float(self.get_argument('lon'))
         username = self.get_argument('username')
         if qType == 1:
-            lat = float(self.get_argument('lat'))
-            lon = float(self.get_argument('lon'))
             items = sorted(self.data, key=lambda key: dist(self.data[key]['lat'], self.data[key]['lon'], lat, lon))
             ret = []
             i = 0
@@ -261,8 +262,9 @@ class SearchHandler(CorsMixin, web.RequestHandler):
                 tempa = 0
                 for attr in self.data[key]['attributes']:
                     if attr in self.users[username]['preferenceData']:
-                        tempa += self.data[key]['attributes'][attr] * self.users[username]['preferenceData'][attr]['ratingTot']/self.users[username]['preferenceData'][attr]['totalWeight']
+                        tempa += self.data[key]['attributes'][attr] * float(self.users[username]['preferenceData'][attr]['ratingTot'])/self.users[username]['preferenceData'][attr]['totalWeight']
                 tempa *= -1
+                print tempa
                 tempa *= int(self.data[key]['rating'])
                 #print(tempa)
                 temp.append((key, tempa))
@@ -274,6 +276,7 @@ class SearchHandler(CorsMixin, web.RequestHandler):
                     break
                 if not self.data[items[i][0]]['username'] == username:
                     ret.append(self.data[items[i][0]])
+                    ret[len(ret)-1]['dist'] = dist(lat, lon, ret[len(ret)-1]['lat'], ret[len(ret)-1]['lon'])
                     print items[i][1]
                 i+=1
             self.write(json.dumps(ret))
