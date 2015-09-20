@@ -1,0 +1,31 @@
+<link rel="stylesheet" type="text/css" href="/css/main.css" />
+<link rel="import" href="elements.html">
+
+<dom-module id="rec-box">
+<style>
+a {
+  color: black;
+  text-decoration: none;
+}
+</style>
+<template>
+  <a href="/details.html">
+    <div style="width:100%; border-bottom:1px solid black; padding: 10px 0px 30px 0px;">
+      <div class="row">
+        <div class="col-xs-9">
+          <h3 style="margin:5px 0px 0px 10px;">Your mom</h3>
+        </div>
+        <div class="col-xs-3" style="margin-top:10px;">
+          1.86 mi
+        </div>
+      </div>
+    </div>
+  </a>
+</template>
+
+<script>
+  Polymer({
+    is: 'rec-box',
+  });
+</script>
+</dom-module>
