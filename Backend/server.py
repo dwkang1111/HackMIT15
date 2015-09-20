@@ -269,6 +269,7 @@ class SearchHandler(CorsMixin, web.RequestHandler):
                 #print(tempa)
                 temp.append((key, tempa))
             items = sorted(temp, key=lambda key: key[1])
+            print items
             ret = []
             i=0
             while True:
@@ -287,6 +288,11 @@ def init(firebase):
     global data
     users = firebase.get('/users', None)
     data = firebase.get('/data', None)
+    if users is None:
+        users = {}
+    if data is None:
+        data = {}
+
     print 'Initialization done'
 
 if __name__ ==  '__main__':
