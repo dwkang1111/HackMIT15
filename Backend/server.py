@@ -51,7 +51,7 @@ class APIHandler(web.RequestHandler):
         """
         Query for recommendations based on user.
         Information required:
-            [username]
+            username
             [lat]
             [long]
             quant : how many you want
@@ -73,14 +73,20 @@ class APIHandler(web.RequestHandler):
             return R*c
         quant = int(self.get_argument('quant'))
         qType = int(self.get_argument('qType'))
+        username = self.get_argument('username')
         if qType == 1:
             lat = float(self.get_argument('lat'))
             lon = float(self.get_argument('lon'))
             items = sorted(self.data, key=lambda key: dist(self.data[key]['lat'], self.data[key]['lon'], lat, lon))
             ret = []
-            for i in range(min(quant, len(items))):
-                ret.append(self.data[items[i]])
-                print dist(self.data[items[i]]['lat'], self.data[items[i]]['lon'], lat, lon)
+            i = 0
+            while True:
+                if i >= quant or i >= len(items):
+                    break
+                if not self.data[items[i]]['username'] == username:
+                    ret.append(self.data[items[i]])
+                    print dist(self.data[items[i]]['lat'], self.data[items[i]]['lon'], lat, lon)
+                i+=1
             self.write(json.dumps(ret))
         elif qType == 2:
             item = []
@@ -88,12 +94,16 @@ class APIHandler(web.RequestHandler):
                 item.append((key, self.data[key]['rating']))
             items = sorted(item, key=lambda key: -1*key[1])
             ret = []
-            for i in range(min(quant, len(items))):
-                ret.append(self.data[items[i][0]])
-                print items[i][1]
+            i=0
+            while True:
+                if i >= quant or i >= len(items):
+                    break
+                if not self.data[items[i][0]]['username'] == username:
+                    ret.append(self.data[items[i][0]])
+                    print items[i][1]
+                i+=1
             self.write(json.dumps(ret))
         elif qType == 3:
-            username = self.get_argument('username')
             temp = []
             for key in self.data:
                 tempa = 0
@@ -106,9 +116,14 @@ class APIHandler(web.RequestHandler):
                 temp.append((key, tempa))
             items = sorted(temp, key=lambda key: key[1])
             ret = []
-            for i in range(min(quant, len(items))):
-                ret.append(self.data[items[i][0]])
-                print items[i][1]
+            i=0
+            while True:
+                if i >= quant or i >= len(items):
+                    break
+                if not self.data[items[i][0]]['username'] == username:
+                    ret.append(self.data[items[i][0]])
+                    print items[i][1]
+                i+=1
             self.write(json.dumps(ret))
         print("HI")
 
