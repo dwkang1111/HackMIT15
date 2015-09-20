@@ -1,0 +1,66 @@
+GET PICTURE
+
+$.ajax({
+  url: "http://845edac5.ngrok.io/data/",
+  method: "GET",
+  data: {'id': [PICTURE ID]},
+  success: function(result) {
+
+  },
+});
+
+ADD AN IMAGE
+
+$.ajax({
+  url: "http://845edac5.ngrok.io/data/",
+  method: "POST",
+  data: {'username': [username],
+         'lat': [latitude degrees],
+         'lon': [longitude degrees],
+         'rating': [rating],
+         'serializedImage': [base64 encoded image data],
+  },
+  success: function(result) {
+
+  },
+});
+
+GET INFORMATION ABOUT A USER
+
+$.ajax({
+  url: "http://845edac5.ngrok.io/users/",
+  method: "GET",
+  data: {'username': [username]},
+  success: function(result) {
+
+  },
+});
+
+CREATE A USER
+
+$.ajax({
+  url: "http://845edac5.ngrok.io/users/",
+  method: "POST",
+  data: {'username': [username],
+         'password': [password],
+         'name':  [name]
+  },
+  success: function(result) {
+
+  },
+});
+
+SEARCH FOR users
+
+$.ajax({
+  url: "http://845edac5.ngrok.io/users/",
+  method: "GET",
+  data: {'username': [username],
+         'lat': [latitude degrees],
+         'lon':  [longitude degrees],
+         'quant': [how many you want],
+  },
+  success: function(result) {
+
+  },
+});

@@ -1,0 +1,21 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+</head>
+<body>
+<script>
+$(document).ready(function(){
+  $.ajax({
+    url: "http://127.0.0.1:3030/data",
+    method: "GET",
+    data: {'id': '-Jzd0-9MrcDnXBiJOS0'},
+    success: function(result) {
+      console.log(result);
+    },
+  });
+})
+</script>
+</body>
+
+</html>

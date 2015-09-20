@@ -12,15 +12,27 @@
       top: 0; 
       width: 100%;
     }
+<<<<<<< HEAD
     #map { height: 100%; }
     
+=======
+    paper-button {
+      width: 100%;
+      height: 80px;
+      font-size: 20px;
+    }
+>>>>>>> b661b5cc2050c0904bf7feafa89a80e4e93edabc
   </style>
   <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
+  <!-- <div id="mainDiv"></div> -->
   <paper-drawer-panel id="menu">
     <paper-header-panel drawer style="z-index:5;">
-      Sidebar
+      <div style="margin-top:55px;">
+        <paper-button>Preferences</paper-button>
+        <paper-button onclick="logout()">Log Out</paper-button>
+      </div>
     </paper-header-panel>
     <paper-header-panel main>
       <paper-toolbar class="fix">
@@ -88,28 +100,42 @@
             
           </div>
         </div>
-        <div style="top:50%; height:50%; width:100%; overflow-y:auto; overflow-x:hidden;">
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
-          <rec-box></rec-box>
+        <div id="recboxDiv" style="top:50%; height:50%; width:100%; overflow-y:auto; overflow-x:hidden;">
         </div>
       </div>
       <paper-fab icon="add" id="capturePhotoButton"></paper-fab>
     </paper-header-panel>
   </paper-drawer-panel>
+
   <script>
     function toggle() {
       document.getElementById('menu').togglePanel();
     }
+    function logout() {
+      page('index.html');
+    }
+    $(window).load(function() {
+        $("#mainDiv").load("loadingTwo.html");
+    });
+    $(document).ready(function() {
+        $.ajax({
+          url: "http://845edac5.ngrok.io/search/",
+          method: "GET",
+          data: {'username': localStorage.getItem('username'),
+                 'lat': 42.3598,
+                 'lon': 71.0921,
+                 'quant': 10,
+                 'qType':3
+          },
+          success: function(result) {
+            result = JSON.parse(result);
+            var div = $("#recboxDiv");
+            for(var x = 0; x < result.length; x++) {
+              div.append("<rec-box name=\'" + result[x].name + "\' dist=" + Math.round(result[x].dist/1000) + " index=" + x + "></rec-box>"); 
+            }
+          },
+        });
+    })
   </script>
 </body>
 </head>

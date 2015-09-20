@@ -13,6 +13,10 @@
       color: white;
       text-decoration: none;
     }
+    img {
+      height: 200px;
+      width: auto;
+    }
   </style>
 </head>
 <body>
@@ -22,18 +26,21 @@
   </a>
   </paper-toolbar>
   <div class="container-fluid">
-    <div class="row" style="margin-bottom:20px;">
-      <div class="col-xs-7">
-        <h3>Your mom</h3>
+    <div class="row">
+      <div class="col-xs-9">
+        <h3 id="name"></h3>
       </div>
-      <div class="col-xs-5 text-right" style="margin-top:30px;">
-        1.86 mi
+      <div class="col-xs-3 text-right" style="margin-top:30px;">
+        <p id="dist"></p>
       </div>
     </div>
-    <div class="text-center" style="height:200px;">
-      <img src="img/temple.jpg" style="height:200px; width:auto;"/>
+    <div class="text-right" style="margin-bottom:20px;">
+      <p> Rating: <span id="rating"></span>/10 </p>
     </div>
-    <div style="margin-top:20px;">
+    <div class="text-center" style="height:200px;" >
+      <img id="image"/>
+    </div>
+    <div style="margin-top:20px;" id="info">
       More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. More information would probably go in here. <br>
       Get data from TripAdvisor.
     </div>
@@ -54,6 +61,30 @@
     </div>
   </div>
   <script>
+  $(document).ready(function() {
+    var index = localStorage.getItem('index');
+    $.ajax({
+      url: "http://845edac5.ngrok.io/search/",
+      method: "GET",
+      data: {'username': localStorage.getItem('username'),
+             'lat': 42.3598,
+             'lon': 71.0921,
+             'quant': 10,
+             'qType':3
+      },
+      success: function(result) {
+        result = JSON.parse(result);
+        result = result[index];
+        $("#name").replaceWith("<h3>" + result.name + "</h3>");
+        $("#dist").replaceWith("<p>" + Math.round(result.dist/1000) + "km </p>");
+        $('#rating').replaceWith("<span>" + result.rating + "</span>");
+        var image = new Image();
+        image.src = 'data:image/png;base64,'+result.serializedImage;
+        $('#image').replaceWith("<img src=" + image.src + ">");
+      },
+    });
+    
+  })
   </script>
 </body>
 </head>
