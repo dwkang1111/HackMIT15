@@ -70,7 +70,7 @@
             result = JSON.parse(result);
             var div = $("#recboxDiv");
             for(var x = 0; x < result.length; x++) {
-              div.append("<rec-box dist=" + Math.round(result[x].dist/1000) + " index=" + x + "></rec-box>");
+              div.append("<rec-box name=\'" + result[x].name + "\' dist=" + Math.round(result[x].dist/1000) + " index=" + x + "></rec-box>"); 
             }
           },
         });
